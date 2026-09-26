@@ -19,6 +19,7 @@ host/build/
 
 # Internal development notes (not for publication)
 PROGRESS_AND_HANDOVER.md
+.scratch/
 
 # ---------------------------------------------------------------------------
 # ETSI EN 300 395-2 TETRA speech codec

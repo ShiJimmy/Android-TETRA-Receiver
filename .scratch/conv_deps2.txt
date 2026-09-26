@@ -1,6 +1,0 @@
-﻿28: #ifdef HAVE_ALLOCA_H
-29: #include <alloca.h>
-87: OSMO_ASSERT(code != NULL);
-259: /* Allocate arrays */
-343: in_sym = alloca(sizeof(sbit_t) * code->N);
-439: in_sym = alloca(sizeof(sbit_t) * code->N);
