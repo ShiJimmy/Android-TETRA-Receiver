@@ -1,0 +1,65 @@
+diff --git a/src/librtlsdr.c b/src/librtlsdr.c
+index 82bab6d..9969b44 100644
+--- a/src/librtlsdr.c
++++ b/src/librtlsdr.c
+@@ -1491,6 +1491,32 @@ int rtlsdr_check_dongle_model(void *dev, char *manufact_check, char *product_che
+ }
+ 
+ 
++/* ---------------------------------------------------------------------------
++ * Embedded / Android support
++ *
++ * An unprivileged Android app cannot let libusb enumerate USB devices: the
++ * device is opened by the framework (UsbManager / UsbDeviceConnection) and the
++ * app only receives an already opened file descriptor. rtlsdr_open_fd() takes
++ * that descriptor, wraps it with libusb_wrap_sys_device() and then runs the
++ * regular open path (see the g_wrap_sys_fd branch in rtlsdr_open()).
++ *
++ * On desktop platforms this code is inert: g_wrap_sys_fd stays -1 and
++ * rtlsdr_open() behaves exactly as before.
++ * ------------------------------------------------------------------------- */
++static intptr_t g_wrap_sys_fd = -1;
++
++int rtlsdr_open_fd(int fd, rtlsdr_dev_t **out_dev)
++{
++	g_wrap_sys_fd = (intptr_t)fd;
++
++	/* Skip device discovery when the context is created inside
++	 * rtlsdr_open(). This is a default context option, so it is applied to
++	 * every context created afterwards. */
++	libusb_set_option(NULL, LIBUSB_OPTION_NO_DEVICE_DISCOVERY);
++
++	return rtlsdr_open(out_dev, 0);
++}
++
+ int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)
+ {
+ 	int r;
+@@ -1519,6 +1545,19 @@ int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)
+ 
+ 	dev->dev_lost = 1;
+ 
++	if (g_wrap_sys_fd >= 0) {
++		/* Descriptor supplied by rtlsdr_open_fd() (Android/embedded) */
++		intptr_t wrap_fd = g_wrap_sys_fd;
++		g_wrap_sys_fd = -1;
++		r = libusb_wrap_sys_device(dev->ctx, wrap_fd, &dev->devh);
++		if (r < 0 || dev->devh == NULL) {
++			fprintf(stderr, "libusb_wrap_sys_device error %d\n", r);
++			goto err;
++		}
++		device = libusb_get_device(dev->devh);
++		goto have_devh;
++	}
++
+ 	cnt = libusb_get_device_list(dev->ctx, &list);
+ 
+ 	for (i = 0; i < cnt; i++) {
+@@ -1553,6 +1592,7 @@ int rtlsdr_open(rtlsdr_dev_t **out_dev, uint32_t index)
+ 
+ 	libusb_free_device_list(list, 1);
+ 
++have_devh:
+ 	if (libusb_kernel_driver_active(dev->devh, 0) == 1) {
+ 		dev->driver_active = 1;
+ 

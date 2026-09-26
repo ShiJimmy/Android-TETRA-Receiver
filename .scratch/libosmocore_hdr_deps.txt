@@ -1,0 +1,37 @@
+﻿=== msgb.h ===
+#include <stdint.h>
+#include <osmocom/core/linuxlist.h>
+#include <osmocom/core/utils.h>
+#include <osmocom/core/bits.h>
+#include <osmocom/core/defs.h>
+#include <osmocom/core/panic.h>
+=== linuxlist.h ===
+#include <stddef.h>
+#include <stdbool.h>
+=== bits.h ===
+#include <stdint.h>
+#include <stddef.h>
+#include <osmocom/core/bit16gen.h>
+#include <osmocom/core/bit32gen.h>
+#include <osmocom/core/bit64gen.h>
+=== prim.h ===
+#include <stdint.h>
+#include <osmocom/core/msgb.h>
+=== utils.h ===
+#include <stdbool.h>
+#include <stdint.h>
+#include <stdio.h>
+#include <string.h>
+#include <osmocom/core/backtrace.h>
+#include <osmocom/core/talloc.h>
+#include <osmocom/core/panic.h>
+#include <osmocom/core/defs.h>
+=== logging.h ===
+#include <stdio.h>
+#include <stdint.h>
+#include <stdarg.h>
+#include <stdbool.h>
+#include <osmocom/core/defs.h>
+#include <osmocom/core/linuxlist.h>
+=== talloc.h ===
+#include <talloc.h>

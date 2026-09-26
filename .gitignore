@@ -1,0 +1,33 @@
+# Android / Gradle
+*.apk
+*.aab
+*.dex
+build/
+.gradle/
+.cxx/
+local.properties
+.idea/
+*.iml
+
+# Native host build
+host/build/
+
+# Native objects / libs
+*.o
+*.a
+*.so
+
+# Internal development notes (not for publication)
+PROGRESS_AND_HANDOVER.md
+
+# ---------------------------------------------------------------------------
+# ETSI EN 300 395-2 TETRA speech codec
+#
+# The codec is NOT distributed with this project and must not be committed:
+# it is downloaded on demand by tools/fetch_etsi_codec.ps1 / .sh from the ETSI
+# website and is subject to ETSI's own licence terms (see the licence notes
+# shipped inside the archive, C-WORD/C_WORD_*.DOC).  Only the fetch scripts
+# and the PROVENANCE note are tracked.
+# ---------------------------------------------------------------------------
+app/src/main/cpp/thirdparty/etsi_codec/
+thirdparty-src/

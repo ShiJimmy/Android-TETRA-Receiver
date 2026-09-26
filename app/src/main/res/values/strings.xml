@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TETRA Receiver</string>
+    <string name="about_menu">About / Licences</string>
+    <string name="about_title">About / Licences</string>
+    <string name="about_text">TETRA Receiver\nCopyright (C) 2026 Shi Jimmy\n\nLicensed under the GNU Affero General Public License, version 3 or later (AGPL-3.0-or-later).\n\nThis program builds on third-party work:\n• osmo-tetra (sq5bpf fork) — AGPL-3.0-or-later\n• tetra-rtlsdr — GPL-3.0-or-later\n• liquid-dsp — MIT\n• librtlsdr — GPL-2.0-or-later\n• libusb — LGPL-2.1\n• ETSI EN 300 395-2 speech codec — ETSI terms, not redistributed\n\nSee THIRD_PARTY.md in the source tree for details.</string>
+</resources>

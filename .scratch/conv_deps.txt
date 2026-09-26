@@ -1,0 +1,31 @@
+﻿27: #include "config.h"
+29: #include <alloca.h>
+31: #include <stdint.h>
+32: #include <stdlib.h>
+33: #include <string.h>
+35: #include <osmocom/core/utils.h>
+36: #include <osmocom/core/bits.h>
+37: #include <osmocom/core/conv.h>
+45: osmo_conv_get_input_length(const struct osmo_conv_code *code, int len)
+51: osmo_conv_get_output_length(const struct osmo_conv_code *code, int len)
+56: in_len = osmo_conv_get_input_length(code, len);
+83: osmo_conv_encode_init(struct osmo_conv_encoder *encoder,
+84: const struct osmo_conv_code *code)
+86: memset(encoder, 0x00, sizeof(struct osmo_conv_encoder));
+87: OSMO_ASSERT(code != NULL);
+92: osmo_conv_encode_load_state(struct osmo_conv_encoder *encoder,
+105: _conv_encode_do_output(struct osmo_conv_encoder *encoder,
+108: const struct osmo_conv_code *code = encoder->code;
+133: osmo_conv_encode_raw(struct osmo_conv_encoder *encoder,
+136: const struct osmo_conv_code *code = encoder->code;
+162: osmo_conv_encode_flush(struct osmo_conv_encoder *encoder, ubit_t *output)
+164: const struct osmo_conv_code *code = encoder->code;
+203: * \ref osmo_conv_init, \ref osmo_conv_encode_load_state,
+204: * \ref osmo_conv_encode_raw and \ref osmo_conv_encode_flush as needed.
+207: osmo_conv_encode(const struct osmo_conv_code *code,
+210: struct osmo_conv_encoder encoder;
+213: osmo_conv_encode_init(&encoder, code);
+217: osmo_conv_encode_load_state(&encoder, &input[eidx]);
+220: l = osmo_conv_encode_raw(&encoder, input, output, code->len);
+223: l += osmo_conv_encode_flush(&encoder, &output[l]);
+674
